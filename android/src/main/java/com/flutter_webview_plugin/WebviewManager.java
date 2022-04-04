@@ -39,6 +39,8 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
 import static android.app.Activity.RESULT_OK;
+import android.webkit.PermissionRequest;
+
 
 /**
  * Created by lejard_h on 20/12/2017.
@@ -253,7 +255,17 @@ class WebviewManager {
                 return true;
             }
 
+            @Override
+            public void onPermissionRequest(final PermissionRequest request) {
+                try{
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        request.grant(request.getResources());
+                    }
+                } catch (Exception e) {
 
+                }
+            }
+            
             @Override
             public void onProgressChanged(WebView view, int progress) {
                 Map<String, Object> args = new HashMap<>();
